@@ -4,6 +4,7 @@ import sys
 import pandas as pd
 
 from coninthub.contract_meta_manager.contractMetadata import ContractMetadata
+from coninthub.negotiation_monitor.main import calc_renewal_time
 
 def main():
     st.title("Contractual Intelligence Hub")
@@ -60,7 +61,6 @@ def display_market_overview():
     st.table(df_market.style.hide(axis='index'))
     
 def display_contract_monitor():
-    st.header("Upcoming Contract Renewals")
 
         # Example data
     contracts = [
@@ -99,6 +99,12 @@ def display_contract_monitor():
     ]
 
     st.table(table_data)
+
+    if st.button('Run Evaluation'):
+        renewal = calc_renewal_time()
+        st.text_area("Renewal Information", renewal)
+
+
 
 
 if __name__ == "__main__":
