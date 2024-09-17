@@ -1,6 +1,7 @@
 import streamlit as st
 import datetime
 import sys
+import pandas as pd
 
 from coninthub.contract_meta_manager.contractMetadata import ContractMetadata
 
@@ -8,19 +9,55 @@ def main():
     st.title("Contractual Intelligence Hub")
 
      # Create tabs
-    tabs = st.tabs(["Market Signals", "Contract Monitor", "Negotiation Strategist"])
+    tabs = st.tabs(["Market Overview", "Suppliers", "Contract Monitor", "Negotiation Strategist"])
     
     with tabs[0]:
-        st.header("Market Signals")
-        st.write("Content for Market Signals goes here.")
+       display_market_overview()
 
     with tabs[1]:
+       display_supplier_overview()
+
+    with tabs[2]:
         display_contract_monitor()
     
-    with tabs[2]:
-        st.header("Negotiation Strategist")
-        st.write("Content for Negotiation Strategist goes here.")
+    with tabs[3]:
+        display_negotiation_strategist()
+
+def display_supplier_overview():
+    st.header("Suppliers")
     
+    # Example data
+    suppliers = [
+        {"Company": "AluminiumY", "Location": "USA", "Contact": "contact@aluminiumy.com"},
+        {"Company": "AluminiumX", "Location": "Canada", "Contact": "contact@aluminiumx.com"},
+        {"Company": "Contoso1", "Location": "UK", "Contact": "contact@contoso1.com"},
+        {"Company": "Contoso2", "Location": "Germany", "Contact": "contact@contoso2.com"},
+    ]
+    
+    # Create a DataFrame for the table
+    df_suppliers = pd.DataFrame(suppliers)
+    
+    # Display the table
+    st.table(df_suppliers)
+
+
+def display_negotiation_strategist():
+    st.header("Negotiation Strategist")
+    st.write("Content for Negotiation Strategist goes here.")
+
+def display_market_overview():
+    st.header("Commodity Prices")
+    
+    # Example data for market prices
+    market_data = [
+        {"Commodity": "Aluminium", "Current Price": "$2,500", "Change Last Month": "+2%", "Change Last Year": "+10%"}
+    ]
+    
+    # Create a DataFrame for the table
+    df_market = pd.DataFrame(market_data)
+    
+    # Display the table without the index
+    st.table(df_market.style.hide(axis='index'))
     
 def display_contract_monitor():
     st.header("Upcoming Contract Renewals")
