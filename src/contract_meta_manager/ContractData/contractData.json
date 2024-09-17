@@ -1,0 +1,122 @@
+[
+    {
+        "agreementCode": "AG001",
+        "agreementName": "Supply Agreement 1",
+        "supplierId": "SUP001",
+        "supplierName": "Supplier One",
+        "contractValue": 100000,
+        "startDate": "2023-01-01",
+        "expiryDate": "2024-01-01",
+        "commodityCode": "COM001",
+        "commodityDesc": "Electronics",
+        "status": "Active"
+    },
+    {
+        "agreementCode": "AG002",
+        "agreementName": "Supply Agreement 2",
+        "supplierId": "SUP002",
+        "supplierName": "Supplier Two",
+        "contractValue": 200000,
+        "startDate": "2023-02-01",
+        "expiryDate": "2024-02-01",
+        "commodityCode": "COM002",
+        "commodityDesc": "Furniture",
+        "status": "Active"
+    },
+    {
+        "agreementCode": "AG003",
+        "agreementName": "Supply Agreement 3",
+        "supplierId": "SUP003",
+        "supplierName": "Supplier Three",
+        "contractValue": 150000,
+        "startDate": "2023-03-01",
+        "expiryDate": "2024-03-01",
+        "commodityCode": "COM003",
+        "commodityDesc": "Stationery",
+        "status": "Pending"
+    },
+    {
+        "agreementCode": "AG004",
+        "agreementName": "Supply Agreement 4",
+        "supplierId": "SUP004",
+        "supplierName": "Supplier Four",
+        "contractValue": 250000,
+        "startDate": "2023-04-01",
+        "expiryDate": "2024-04-01",
+        "commodityCode": "COM004",
+        "commodityDesc": "Software",
+        "status": "Active"
+    },
+    {
+        "agreementCode": "AG005",
+        "agreementName": "Supply Agreement 5",
+        "supplierId": "SUP005",
+        "supplierName": "Supplier Five",
+        "contractValue": 300000,
+        "startDate": "2023-05-01",
+        "expiryDate": "2024-05-01",
+        "commodityCode": "COM005",
+        "commodityDesc": "Hardware",
+        "status": "Expired"
+    },
+    {
+        "agreementCode": "AG006",
+        "agreementName": "Supply Agreement 6",
+        "supplierId": "SUP006",
+        "supplierName": "Supplier Six",
+        "contractValue": 120000,
+        "startDate": "2023-06-01",
+        "expiryDate": "2024-06-01",
+        "commodityCode": "COM006",
+        "commodityDesc": "Cleaning Supplies",
+        "status": "Active"
+    },
+    {
+        "agreementCode": "AG007",
+        "agreementName": "Supply Agreement 7",
+        "supplierId": "SUP007",
+        "supplierName": "Supplier Seven",
+        "contractValue": 180000,
+        "startDate": "2023-07-01",
+        "expiryDate": "2024-07-01",
+        "commodityCode": "COM007",
+        "commodityDesc": "Office Equipment",
+        "status": "Pending"
+    },
+    {
+        "agreementCode": "AG008",
+        "agreementName": "Supply Agreement 8",
+        "supplierId": "SUP008",
+        "supplierName": "Supplier Eight",
+        "contractValue": 220000,
+        "startDate": "2023-08-01",
+        "expiryDate": "2024-08-01",
+        "commodityCode": "COM008",
+        "commodityDesc": "IT Services",
+        "status": "Active"
+    },
+    {
+        "agreementCode": "AG009",
+        "agreementName": "Supply Agreement 9",
+        "supplierId": "SUP009",
+        "supplierName": "Supplier Nine",
+        "contractValue": 170000,
+        "startDate": "2023-09-01",
+        "expiryDate": "2024-09-01",
+        "commodityCode": "COM009",
+        "commodityDesc": "Consulting",
+        "status": "Expired"
+    },
+    {
+        "agreementCode": "AG010",
+        "agreementName": "Supply Agreement 10",
+        "supplierId": "SUP010",
+        "supplierName": "Supplier Ten",
+        "contractValue": 210000,
+        "startDate": "2023-10-01",
+        "expiryDate": "2024-10-01",
+        "commodityCode": "COM010",
+        "commodityDesc": "Logistics",
+        "status": "Active"
+    }
+]
