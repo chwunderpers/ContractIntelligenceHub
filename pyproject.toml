@@ -5,7 +5,6 @@ description = ""
 authors = ["Bernd Kullick <berndku@microsoft.com>"]
 readme = "README.md"
 packages = [{include = "coninthub"}]
-package-mode = false
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.13"
