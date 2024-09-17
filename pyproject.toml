@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "coninthub"
+version = "0.1.0"
+description = ""
+authors = ["Bernd Kullick <berndku@microsoft.com>"]
+readme = "README.md"
+packages = [{include = "coninthub"}]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+pandas = "^2.2.2"
+semantic-kernel = "^1.9.0"
+streamlit = "^1.38.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
