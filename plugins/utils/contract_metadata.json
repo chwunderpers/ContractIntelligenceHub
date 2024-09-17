@@ -1,0 +1,23 @@
+[
+    {
+    "agreementCode": "AG001",
+    "agreementName": "Supply Agreement 1",
+    "supplierId": "SUP001",
+    "supplierName": " AluminiumY",
+    "contractValue": 15000000,
+    "startDate": "2023-01-01",
+    "expiryDate": "2024-01-01",
+    "contractExpiryDateInMonth": 12,
+    "supplierCriticality": "Tier 1 - Business Critical",
+    "FinancialRiskScore": "High",
+    "AutoRenewal": "No",
+    "priceProtectionClause": "partial - medium risk",
+    "businessUnit": "R&D",
+    "singleSource": "Yes however high transition costs assumed",
+    "terminationForConvenienceClause": "yes w/6 month notice",
+    "lastSourcing": "high risk",
+    "commodityCode": "COM001",
+    "commodityDesc": "Aluminium",
+    "status": "Active"
+    }
+]
