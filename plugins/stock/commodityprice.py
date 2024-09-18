@@ -24,6 +24,7 @@ class rulesetPlugin:
                     ],
                     execution_settings=AzureChatPromptExecutionSettings(
                         temperature=0.0),
+                        response_format={"type": "text"},
                 )
         return prompt_template_config_for_stockprice
     
@@ -45,5 +46,6 @@ class rulesetPlugin:
                     ],
                     execution_settings=AzureChatPromptExecutionSettings(
                         temperature=0.0),
+                        response_format={"type": "text"},
                 )
         return prompt_template_config_for_analyzemarket

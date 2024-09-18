@@ -1,10 +1,20 @@
+import json
+import logging
 import streamlit as st
 import datetime
 import sys
 import pandas as pd
+import dotenv
 
 from coninthub.contract_meta_manager.contractMetadata import ContractMetadata
 from coninthub.negotiation_monitor.main import calc_renewal_time
+from opentelemetry.sdk._logs.export import ConsoleLogExporter, BatchLogRecordProcessor
+from opentelemetry.sdk._logs import LoggerProvider, LoggingHandler
+from opentelemetry.sdk.resources import Resource
+from opentelemetry.semconv.resource import ResourceAttributes
+from opentelemetry._logs import set_logger_provider
+
+import asyncio
 
 def main():
     st.title("Contractual Intelligence Hub")
@@ -103,52 +113,74 @@ def display_market_overview():
     
 def display_contract_monitor():
 
-        # Example data
-    contracts = [
-        ContractMetadata(
-            agreementCode="AG001",
-            agreementName="Supply Agreement 1",
-            supplierId="SUP001",
-            supplierName="AluminiumY",
-            contractValue=15000000,
-            startDate=datetime.datetime.strptime("2023-01-01", "%Y-%m-%d").date(),
-            expiryDate=datetime.datetime.strptime("2024-01-01", "%Y-%m-%d").date(),
-            contractExpiryDateInMonth=12,
-            supplierCriticality="Tier 1 - Business Critical",
-            FinancialRiskScore="High",
-            AutoRenewal="No",
-            priceProtectionClause="partial - medium risk",
-            businessUnit="R&D",
-            singleSource="Yes however high transition costs assumed",
-            terminationForConvenienceClause="yes w/6 month notice",
-            lastSourcing="high risk",
-            commodityCode="COM001",
-            commodityDesc="Aluminium",
-            status="Active"
-        )
-    ]
+    # Create an empty DataFrame with the specified columns
+    if 'df_contract_monitor' not in st.session_state:
+        columns = ["Agreement Code", "Supplier Name", "Commodity", "Suggested Start of Renewal", "Reasoning"]
+        st.session_state.df_contract_monitor = pd.DataFrame(columns=columns)
 
-     # Create a list of dictionaries for the table
-    # table_data = [
-    #     {
-    #         "Supplier Name": contract.supplierName,
-    #         "Commodity": contract.commodityDesc,
-    #         "Contract Value": contract.contractValue,
-    #         "Contract Expiry Date": contract.expiryDate
-    #     }
-    #     for contract in contracts
-    # ]
-
-    # st.table(table_data)
-
-    # Read the content of the contract_metadata.json file
-    
     if st.button('Run Evaluation'):
-        renewal = calc_renewal_time()
-        st.text_area("Renewal Information", renewal)
 
+        async def run_evaluation():
+            try:
+                renewal = await calc_renewal_time("AG001")
+                renewal_json = json.loads(str(renewal)) # Convert to JSON
+                new_row = pd.DataFrame([{
+                    "Agreement Code": "AG001",
+                    "Supplier Name": "AluminiumY",
+                    "Commodity": "Aluminium",
+                    "Suggested Start of Renewal": renewal_json["timeframe"],
+                    "Reasoning": renewal_json["reasoning"]
+                }])
+                st.session_state.df_contract_monitor = pd.concat([st.session_state.df_contract_monitor, new_row], ignore_index=True)
+            except Exception as e:
+                st.text_area("Error", str(e))
 
+        result = asyncio.run(run_evaluation())
 
+        st.table(st.session_state.df_contract_monitor.style.hide(axis='index'))
 
+def set_up_logging():
+    class KernelFilter(logging.Filter):
+        """A filter to not process records from semantic_kernel."""
+
+        # These are the namespaces that we want to exclude from logging for the purposes of this demo.
+        namespaces_to_exclude: list[str] = [
+            "semantic_kernel.functions.kernel_plugin",
+            "semantic_kernel.prompt_template.kernel_prompt_template",
+        ]
+
+        def filter(self, record):
+            return not any([record.name.startswith(namespace) for namespace in self.namespaces_to_exclude])
+
+    resource = Resource.create({ResourceAttributes.SERVICE_NAME: "TelemetryExample"})
+
+    exporters = []
+    exporters.append(ConsoleLogExporter())
+
+    # Create and set a global logger provider for the application.
+    logger_provider = LoggerProvider(resource=resource)
+    # Log processors are initialized with an exporter which is responsible
+    # for sending the telemetry data to a particular backend.
+    for log_exporter in exporters:
+        logger_provider.add_log_record_processor(BatchLogRecordProcessor(log_exporter))
+    # Sets the global default logger provider
+    set_logger_provider(logger_provider)
+
+    # Create a logging handler to write logging records, in OTLP format, to the exporter.
+    handler = LoggingHandler()
+    # Add filters to the handler to only process records from semantic_kernel.
+    handler.addFilter(logging.Filter("semantic_kernel"))
+    handler.addFilter(KernelFilter())
+    # Attach the handler to the root logger. `getLogger()` with no arguments returns the root logger.
+    # Events from all child loggers will be processed by this handler.
+    logger = logging.getLogger()
+    logger.addHandler(handler)
+    # Set the logging level to NOTSET to allow all records to be processed by the handler.
+    logger.setLevel(logging.NOTSET)
+    
 if __name__ == "__main__":
+    #load environment variables
+    dotenv.load_dotenv(override=True)
+    # set_up_logging()
+
     main()
