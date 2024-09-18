@@ -32,9 +32,7 @@ class AlphaVantagePlugin:
                                  tickers
                                  ) -> Annotated[tuple[Literal['NEWS_SENTIMENT'], Literal['feed'], None], "The news sentiment data"]:
         result = []
-        self.logger.info((tickers))
         for ticker in tickers:
-            self.logger.info((ticker))
             loop = asyncio.get_event_loop()
             data, meta_data = await loop.run_in_executor(None, self.ai.get_news_sentiment, ticker)
             data = data[:5]

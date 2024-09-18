@@ -52,7 +52,7 @@ async def main():
 
     # Enable planning
     execution_settings = AzureChatPromptExecutionSettings(
-            max_tokens=200,
+            max_tokens=1000,
             temperature=0.0,
             top_p=0.8,
             function_choice_behavior=FunctionChoiceBehavior(type=FunctionChoiceType.AUTO,
