@@ -10,7 +10,7 @@ def main():
     st.title("Contractual Intelligence Hub")
 
      # Create tabs
-    tabs = st.tabs(["Market Overview", "Suppliers", "Playbooks", "Contract Monitor", "Negotiation Strategist"])
+    tabs = st.tabs(["Market Overview", "Suppliers", "Playbooks", "Contracts", "Contract Monitor", "Negotiation Strategist"])
     
     with tabs[0]:
        display_market_overview()
@@ -22,11 +22,24 @@ def main():
         display_playbooks()
     
     with tabs[3]:
+        display_contracts()
+    
+    with tabs[4]:
         display_contract_monitor()
 
-    with tabs[4]:
+    with tabs[5]:
         display_negotiation_strategist()
 
+def display_contracts():
+    try:
+        with open('plugins/utils/contract_metadata.json', 'r') as file:
+            contract_metadata_content = file.read()
+    except FileNotFoundError:
+        contract_metadata_content = "File not found."
+
+    # Display the content in a text box
+    st.text_area("Contract Metadata", contract_metadata_content, height=600)
+    
 def display_playbooks():
     st.header("Renewal Playbook")
     
@@ -116,18 +129,20 @@ def display_contract_monitor():
     ]
 
      # Create a list of dictionaries for the table
-    table_data = [
-        {
-            "Supplier Name": contract.supplierName,
-            "Commodity": contract.commodityDesc,
-            "Contract Value": contract.contractValue,
-            "Contract Expiry Date": contract.expiryDate
-        }
-        for contract in contracts
-    ]
+    # table_data = [
+    #     {
+    #         "Supplier Name": contract.supplierName,
+    #         "Commodity": contract.commodityDesc,
+    #         "Contract Value": contract.contractValue,
+    #         "Contract Expiry Date": contract.expiryDate
+    #     }
+    #     for contract in contracts
+    # ]
 
-    st.table(table_data)
+    # st.table(table_data)
 
+    # Read the content of the contract_metadata.json file
+    
     if st.button('Run Evaluation'):
         renewal = calc_renewal_time()
         st.text_area("Renewal Information", renewal)
