@@ -37,6 +37,8 @@ class AlphaVantagePlugin:
             self.logger.info((ticker))
             loop = asyncio.get_event_loop()
             data, meta_data = await loop.run_in_executor(None, self.ai.get_news_sentiment, ticker)
-            result.append(data[:5])
+            data = data[:5]
+            data = data[["title","overall_sentiment_label"]]
+            result.append(data)
         self.logger.info(f"Retrieved news sentiment data for {result}")
         return result
