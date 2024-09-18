@@ -38,7 +38,6 @@ async def main():
         deployment_name="gpt-4o",
         endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
         api_key=os.getenv("AZURE_OPENAI_KEY"),
-        
     ))
 
     # Set the logging level for  semantic_kernel.kernel to DEBUG.

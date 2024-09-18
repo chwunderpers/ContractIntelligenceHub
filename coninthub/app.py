@@ -10,7 +10,7 @@ def main():
     st.title("Contractual Intelligence Hub")
 
      # Create tabs
-    tabs = st.tabs(["Market Overview", "Suppliers", "Contract Monitor", "Negotiation Strategist"])
+    tabs = st.tabs(["Market Overview", "Suppliers", "Playbooks", "Contract Monitor", "Negotiation Strategist"])
     
     with tabs[0]:
        display_market_overview()
@@ -19,11 +19,39 @@ def main():
        display_supplier_overview()
 
     with tabs[2]:
-        display_contract_monitor()
+        display_playbooks()
     
     with tabs[3]:
+        display_contract_monitor()
+
+    with tabs[4]:
         display_negotiation_strategist()
 
+def display_playbooks():
+    st.header("Renewal Playbook")
+    
+    # Read the content of the renewal.jinja2 file
+    try:
+        with open('plugins/utils/renewal.jinja2', 'r') as file:
+            renewal_content = file.read()
+    except FileNotFoundError:
+        renewal_content = "File not found."
+
+    # Display the content in a text box
+    st.text_area("Renewal Playbook Content", renewal_content, height=600)
+
+    st.header("Ruleset")
+
+    # Read the content of the ruleset.jinja2 file
+    try:
+        with open('plugins/utils/ruleset.jinja2', 'r') as file:
+            ruleset_content = file.read()
+    except FileNotFoundError:
+        ruleset_content = "File not found."
+
+    # Display the content in a text box
+    st.text_area("Ruleset Content", ruleset_content, height=300)
+             
 def display_supplier_overview():
     st.header("Suppliers")
     

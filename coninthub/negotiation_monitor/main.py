@@ -18,11 +18,18 @@ from semantic_kernel.connectors.ai.open_ai.prompt_execution_settings.azure_chat_
 from plugins import configure_services
 from modules.negotiation.conversation import NegotiationConversation
 # from modules.stock.alphaVantagePlugin import AlphaVantagePlugin
+from coninthub.contract_meta_manager.contractManager import ContractManager
+from coninthub.playbook_manager.playbookManager import get_playbook
 
-def calc_renewal_time():
-    return "Renew as soon as possible ..."
+def calc_renewal_time(agreementCode: str):
     #load environment variables
     dotenv.load_dotenv(override=True)
+
+    contract_manager = ContractManager()
+    contract_data = contract_manager.get_contract_metadata_by_agreementCode(agreementCode)
+
+    playbook = get_playbook("renewal")
+    
 
     # Initialize the kernel and other classes
     kernel = Kernel()
