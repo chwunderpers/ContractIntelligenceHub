@@ -21,9 +21,9 @@ In order to successfully execute the playbook you need to follow the steps below
 If the agreementCode is not provided ask the user for the agreementCode. If the agreementCode is provided load the metadata for the contract.
 - Your task is to retrieve the current stock value of the commodity. The commodity is provided within the metadata. The commodity price analyzation should also be considered when creating the negotation strategy.
 - Your task is to retrieve the current market situation. You can use an internal function to retrieve this. There are additional information to this task.
-    1. Convert the supplier Name to its stock symbol or if there is no supplier symbol available, retrieve the top 5 stock symbols for the commodity. For example, if the supplier commodity is aluminium, collect stock symbols for the top 5 aluminium suppliers. 
+    1. retrieve the top 2 stock symbols for the commodity. For example, if the supplier commodity is aluminium, collect stock symbols for the top 2 aluminium suppliers. 
     2. retrieve the market news by leveraging the internal function, the input should be a json list of symbols.
 - Once you have retrieved the market situation for all of the companies, you need to analyze this. The market situation should also be considered when creating the negotation strategy.
 - Your task is to load the ruleset for the negotiation. The ruleset contains negotiation rules for the playbook to be executed
 
-After all information are given derive a strategy for the negotiation based on the playbook considering the ruleset.
+After all information are given derive a strategy for the negotiation based on the playbook considering the ruleset. Output the strategy in written form.
