@@ -1,34 +1,39 @@
 import asyncio
-import pandas 
-from typing import Annotated 
+import json
+import os
+import logging
+from typing import Annotated, Literal, Optional
 from alpha_vantage.timeseries import TimeSeries
 from alpha_vantage.foreignexchange import ForeignExchange
 from alpha_vantage.commodities import Commodities
+from alpha_vantage.alphaintelligence import AlphaIntelligence
 from semantic_kernel.functions import kernel_function
 
 class AlphaVantagePlugin:
     def __init__(self, api_key):
-        self.api_key = api_key
+        self.logger = logging.getLogger("kernel")
+        self.api_key = os.getenv("ALPHAVANTAGE_API_KEY")
         self.ts = TimeSeries(key=self.api_key, output_format='json')
         self.forex = ForeignExchange(key=self.api_key, output_format='json')
         self.commodities = Commodities(key=self.api_key, output_format='json')
-        
-    @kernel_function(description="Get the stock price for a symbol")
-    async def get_stock_price(self, symbol: Annotated[str, "The stock symbol to retrieve the price for"]) -> Annotated[dict, "The stock price data"]:
-        loop = asyncio.get_event_loop()
-        data, meta_data = await loop.run_in_executor(None, self.ts.get_quote_endpoint, symbol)
-        return data
-    
-    @kernel_function(description="Get the foreign exchange rate for a currency pair")
-    async def get_exchange_rate(self, from_currency: Annotated[str, "The currency to convert from"], to_currency: Annotated[str, "The currency to convert to"]) -> Annotated[dict, "The exchange rate data"]:
-        loop = asyncio.get_event_loop()
-        data, meta_data = await loop.run_in_executor(None, self.forex.get_currency_exchange_rate, from_currency, to_currency)
-        return data
-    
-    @kernel_function(description="Returns the global price for Aluminum")
-    async def get_aluminium_price(self, interval: Annotated[str, "The interval. Supported values are 'monthly', 'quarterly', 'annual' " ]) -> Annotated[dict, "The Aluminum price data"]:
-        loop = asyncio.get_event_loop()
-        #data, meta_data = self.commodities.get_aluminum(interval='daily')
-        data, meta_data = await loop.run_in_executor(None, self.commodities.get_aluminum, interval)
-        return data
-    
+        self.ai = AlphaIntelligence(key=self.api_key, output_format='json')
+
+    @kernel_function(description="Gets the current stock price for the commodity listed in the commodity")
+    async def get_commodity_price(self, commodity: Annotated[str, "The commodity to retrieve the price for"]) -> Annotated[dict, "The historical commodity prices"]:
+        if commodity == 'Aluminium':
+            loop = asyncio.get_event_loop()
+            data, meta_data = await loop.run_in_executor(None, self.commodities.get_aluminum, 'monthly')
+            self.logger.info(type(data))
+            self.logger.info(f"Retrieved commodity price for {data}")
+            return data.head(24)
+   
+    @kernel_function(description="Get live and historical market news and sentiment data.")
+    async def get_news_sentiment(self, 
+                                 tickers
+                                 ) -> Annotated[tuple[Literal['NEWS_SENTIMENT'], Literal['feed'], None], "The news sentiment data"]:
+        result = []
+        for ticker in tickers:
+            loop = asyncio.get_event_loop()
+            data, meta_data = await loop.run_in_executor(None, self.ai.get_news_sentiment, ticker)
+            result.append(data[0][:5])
+        return result

@@ -51,7 +51,7 @@ async def main():
 
     # Enable planning
     execution_settings = AzureChatPromptExecutionSettings(
-            max_tokens=2000,
+            max_tokens=200,
             temperature=0.0,
             top_p=0.8,
             function_choice_behavior=FunctionChoiceBehavior(type=FunctionChoiceType.AUTO,
@@ -69,6 +69,7 @@ async def main():
     userInput = None
     while True:
         # Collect user input
+        # I need advice on the best negotiation strategy for the renewal of a contract with a single supplier for the agreementCode AG001!
         userInput = input("User > ")
 
         # Terminate the loop if the user says "exit"

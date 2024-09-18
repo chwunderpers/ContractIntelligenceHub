@@ -1,18 +1,34 @@
 # Renewal strategy
 
 This chapter describes the negotiation strategy for the renewal of an existing contract with a supplier. The negotiation strategy is based on the dimensions mentioned in the following sub chapters.
-
-Goal of the negotiation: Renew the contract with the supplier under the most favorable conditions.
+Goal of the negotiation: Renew the contract with the supplier under the most favourable conditions.
 
 ## Supplier
 
 The Supplier dimension is relevant for the negotiation strategy for the renewal of an existing contract with a supplier because the supplier has a significant influence on the negotiation process.
-
 The supplier can influence the negotiation process by offering better or worse conditions, by being more or less flexible, and by being more or less willing to negotiate.
+
+### Supplier Criticality
+
+The Supplier Criticality dimension is relevant for the negotiation strategy for the renewal of an existing contract with a supplier because the supplier has a significant influence on the negotiation process.
+The supplier criticality can influence the negotiation process by offering better or worse conditions, by being more or less flexible, and by being more or less willing to negotiate. This is due to the scarcity and customer reliance on the on the commodity purchased (Critical Raw Materials - Aluminium)
+
+possible values:
+1. Tier 1 / Business Critical
+2. Tier 2 / Approved non - critical
+3. Tier 3 - tactical
+
+value: string
 
 ### Number of Alternative Supplier
 
 The number of alternative suppliers is relevant for the negotiation strategy for the renewal of an existing contract with a supplier because the number of alternative suppliers influences the negotiation power of the buyer.
+
+possible values:
+1. Yes, alternatives in place > 2 - low risk
+2. No alternatives exist - high risk
+3. Yes however high transition costs assumed
+
 Value: numerical
 Conditions that make this dimension relevant
 
@@ -22,10 +38,11 @@ Conditions that make this dimension relevant
 
 The Commercial dimension is relevant for the negotiation strategy for the renewal of an existing contract with a supplier because the commercial conditions of the contract have a significant influence on the negotiation process.
 
-### Price
+### PriceIncrease
 
-Cost for the volume purchased for the product, proided by the incumbent supplier.
-Value: Monetary in $
+Price Increase in % vs Spend (baseline cost). % increase for the volume purchased for the product, requested by the incumbent supplier.
+
+Value: % versus Spend
 
 Conditions that make this dimension relevant
 
@@ -40,21 +57,41 @@ Conditions that make this dimension relevant
 
 - *Number of alternative suppliers* more than 0
 
+### Price Protection Clause
+
+A contract clause with the goal of protecting the customer from unexpected supplier price increases during contract term.
+If a price protection exists in the contract, risk of cost increase is low during contract term.
+
+possible values:
+- Yes - low risk
+- No - High risk
+- Partial/capped - Medium risk
+
+Value: string
+
 ### TCO
 
 Total Cost of Ownership. The total cost of the purchase / contract.
+
+there are two values relevant for this "withoutChange" or "withChange" depending if a change for the supplier is required.
+
 Value: Monetary in $
 Conditions that make this dimension relevant
 
 - Sum of *Price* and *Possible Transition Costs*
 - *Number of alternative suppliers* more than 0
 
+### Contract Term
+Goal of the negotiation for the customer is to extend the contract term to 3 years and use this to secure a good price (no more than 8% price increase)
+
+Value: numerical (value represents a timespan in month)
+
 ## Scope
 
 ### Timeline
 
-Amount of time available to succesfully close the negotiation to avoid business impact provided as deadline date.
-Value: date
+Amount of time available to succesfully close the negotiation to avoid business impact provided as deadline date. Usually this is provided as contractExpiryDateInMonth.
+Value: numerical (represents the remaining duration of the contract measured in month).
 
 Conditions that make this dimension relevant
 
@@ -80,7 +117,7 @@ Conditions that make this dimension relevant
 
 The Current Data dimension is relevant for the negotiation strategy for the renewal of an existing contract with a supplier because it provides the price of the current contract in place with the incumbent supplier.
 
-### Spent
+### Spend
 
 the price of the current contract in place with the incumbent supplier.
 Value: Monetary in $
