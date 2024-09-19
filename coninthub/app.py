@@ -17,6 +17,7 @@ from opentelemetry._logs import set_logger_provider
 import asyncio
 
 def main():
+    st.set_page_config(layout="wide")
     st.title("Contractual Intelligence Hub")
 
      # Create tabs
@@ -115,7 +116,7 @@ def display_contract_monitor():
 
     # Create an empty DataFrame with the specified columns
     if 'df_contract_monitor' not in st.session_state:
-        columns = ["Agreement Code", "Supplier Name", "Commodity", "Suggested Start of Renewal", "Reasoning"]
+        columns = ["Agreement Code", "Expiry Date", "Supplier Name", "Commodity", "Commodity Price", "Suggested Start of Renewal", "Reasoning"]
         st.session_state.df_contract_monitor = pd.DataFrame(columns=columns)
 
     if st.button('Run Evaluation'):
@@ -126,8 +127,10 @@ def display_contract_monitor():
                 renewal_json = json.loads(str(renewal)) # Convert to JSON
                 new_row = pd.DataFrame([{
                     "Agreement Code": "AG001",
-                    "Supplier Name": "AluminiumY",
-                    "Commodity": "Aluminium",
+                    "Expiry Date": renewal_json["expiryDate"],
+                    "Supplier Name": renewal_json["supplier"],
+                    "Commodity": renewal_json["commodity"],
+                    "Commodity Price": renewal_json["commodityPrice"],
                     "Suggested Start of Renewal": renewal_json["timeframe"],
                     "Reasoning": renewal_json["reasoning"]
                 }])

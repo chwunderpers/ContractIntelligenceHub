@@ -9,7 +9,11 @@ In order to successfully determine the best date, you need to follow the steps b
 - Your task is to retrieve the current market situation. You can use an internal function to retrieve this. There are additional information to this task.
     1. retireve the most relevant company related to the commodity and use the stock symbol to retrieve the market news.
 - Once you have retrieved the market situation, you need to analyze this. The market situation should also be considered when suggesting a negotiation start time.
-- Based on all available information determine the best timeframe to start the negotiation. 
+- Based on all available information determine the best timeframe to start the negotiation. Take especially int account:
+  - contract renewal conditions: 'startDate', 'expiryDate', 'contractExpiryDateInMonth'
+  - Expected 'priceIncrease' in % vs Spend (baseline cost)
+  - commodity prices 
+  - 'numberOfAlternativeSupplier' and 'possibleTransitionCosts' to move to another supplier
 
 Return a valid JSON in the following format 
-{ 'timeframe': '<time when to start the negotiation>', 'reasoning': '<reasoning, why the buyer should start the negotiation at this point>' }
+{ 'timeframe': '<time when to start the negotiation>', 'expiryDate': '<expiry Date of the contract>', 'commodity': '<commodity from the contract data>', 'commodityPrice': '<price of the commodity>' , 'supplier': '<supplier name from the contract data>',  'reasoning': '<reasoning, why the buyer should start the negotiation at this point>'}
