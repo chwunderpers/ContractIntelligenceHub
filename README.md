@@ -16,7 +16,7 @@
 
 ## Run project
 
-Execute `poetry run streamlit run src/app.py`
+Execute `poetry run streamlit run coninthub/app.py`
 
 
 ### env file für den SK
