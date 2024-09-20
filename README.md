@@ -20,9 +20,9 @@ Execute `poetry run streamlit run coninthub/app.py`
 
 
 ### env file für den SK
+```
 AZURE_OPENAI_ENDPOINT=
 AZURE_OPENAI_KEY=
 ALPHAVANTAGE_API_KEY=
-
-
+```
 
