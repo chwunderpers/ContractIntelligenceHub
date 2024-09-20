@@ -1,3 +1,4 @@
+import asyncio
 import json
 import logging
 import streamlit as st
@@ -13,6 +14,7 @@ from opentelemetry.sdk._logs import LoggerProvider, LoggingHandler
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.semconv.resource import ResourceAttributes
 from opentelemetry._logs import set_logger_provider
+from sk import create_negotiation_strategy
 
 import asyncio
 
@@ -95,8 +97,23 @@ def display_supplier_overview():
 
 
 def display_negotiation_strategist():
-    st.header("Negotiation Strategist")
-    st.write("Content for Negotiation Strategist goes here.")
+    # Example data for a single contract
+    contract_data = {
+        "Agreement Code": "AG001",
+        "Supplier Name": "AluminiumY",
+        "Commodity": "Aluminium"
+    }
+
+    # Display the contract details
+    st.text_input("Agreement Code", contract_data["Agreement Code"], disabled=True)
+    st.text_input("Supplier Name", contract_data["Supplier Name"], disabled=True)
+    st.text_input("Commodity", contract_data["Commodity"], disabled=True)
+    
+    # Button to create negotiation strategy
+    if st.button('Create negotiation strategy'):
+        strategy_text = str(asyncio.run(create_negotiation_strategy("I need advice on the best negotiation strategy for the renewal of a contract with a single supplier for the agreementCode AG001!")))
+
+        st.text_area("Negotiation Strategy", strategy_text, height=500)
 
 def display_market_overview():
     st.header("Commodity Prices")
@@ -141,6 +158,7 @@ def display_contract_monitor():
         result = asyncio.run(run_evaluation())
 
         st.table(st.session_state.df_contract_monitor.style.hide(axis='index'))
+     
 
 def set_up_logging():
     class KernelFilter(logging.Filter):

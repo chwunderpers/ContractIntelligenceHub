@@ -32,7 +32,7 @@ class AlphaVantagePlugin:
         result = []
         for ticker in tickers:
             loop = asyncio.get_event_loop()
-            data, meta_data = await loop.run_in_executor(None, self.ai.get_news_sentiment, ticker)
+            data, meta_data = await loop.run_in_executor(None, self.ai.get_news_sentiment, 'AA')
             data = data[:5]
             data = data[["title","overall_sentiment_label"]]
             result.append(data)
