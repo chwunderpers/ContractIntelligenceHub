@@ -20,5 +20,4 @@ class NegotiationConversation:
 
         for contract in contract_list:
             if contract["agreementCode"] == agreementCode:
-                self.logger.info(f"Found contract metadata {contract}")
                 return contract

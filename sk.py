@@ -19,7 +19,7 @@ from plugins import configure_services
 from modules.negotiation.conversation import NegotiationConversation
 from modules.stock.alphaVantagePlugin import AlphaVantagePlugin
 
-async def main():
+async def create_negotiation_strategy(question: str):
     #load environment variables
     dotenv.load_dotenv(override=True)
 
@@ -65,33 +65,17 @@ async def main():
             system_template = file.read()
     history.add_system_message(system_template)
 
-    # Initiate a back-and-forth chat
-    userInput = None
-    while True:
-        # Collect user input
-        # I need advice on the best negotiation strategy for the renewal of a contract with a single supplier for the agreementCode AG001!
-        userInput = input("User > ")
+    # Add user input to the history
+    history.add_user_message(question)
 
-        # Terminate the loop if the user says "exit"
-        if userInput == "exit":
-            break
+    # Start the conversation
+    result = await chat_completion.get_chat_message_content(
+        chat_history=history,
+        settings=execution_settings,
+        kernel=kernel
+    )
 
-        # Add user input to the history
-        history.add_user_message(userInput)
+    # Add the message from the agent to the chat history
+    history.add_message(result)
 
-        # Start the conversation
-        result = await chat_completion.get_chat_message_content(
-            chat_history=history,
-            settings=execution_settings,
-            kernel=kernel
-        )
-
-        # Print the results
-        print("Assistant > " + str(result))
-
-        # Add the message from the agent to the chat history
-        history.add_message(result)
-
-# Run the main function
-if __name__ == "__main__":
-    asyncio.run(main())
+    return result
