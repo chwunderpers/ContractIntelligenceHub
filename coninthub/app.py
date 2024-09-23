@@ -23,22 +23,22 @@ def main():
     st.title("Contractual Intelligence Hub")
 
      # Create tabs
-    tabs = st.tabs(["Market Overview", "Suppliers", "Playbooks", "Contracts", "Contract Monitor", "Negotiation Strategist"])
+    tabs = st.tabs([ "Contracts", "Suppliers", "Market Overview", "Contract Monitor", "Playbooks", "Negotiation Strategist"])
     
     with tabs[0]:
-       display_market_overview()
+        display_contracts()
 
     with tabs[1]:
        display_supplier_overview()
 
     with tabs[2]:
-        display_playbooks()
-    
+       display_market_overview()
+
     with tabs[3]:
-        display_contracts()
-    
-    with tabs[4]:
         display_contract_monitor()
+
+    with tabs[4]:
+        display_playbooks()
 
     with tabs[5]:
         display_negotiation_strategist()
